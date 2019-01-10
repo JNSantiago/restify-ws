@@ -7,6 +7,8 @@ const connection = mysqlServer.createConnection({
     database: 'restify'
 })
 
-connection.query('', (error, results) => {
+const categoryModule = require('./categories')({ connection })
 
-})
+module.exports = {
+    categories: () => categoryModule
+}

@@ -1,8 +1,14 @@
+const db = require('../services/mysql')
 
 const routes = (server) => {
     server.get('category', (req, res, next) => {
-        res.send(['1', 'vehicles'])
-        next()
+        db.categories().all().then(categories => {
+            res.send(categories)
+            next()
+        }).catch(error => {
+            res.send(error)
+            next()
+        })
     })
 
     server.post('category', (req, res, next) => {
