@@ -52,3 +52,5 @@ const users = deps => {
         }
     }
 }
+
+module.exports = users

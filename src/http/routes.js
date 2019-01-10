@@ -1,6 +1,16 @@
 const db = require('../services/mysql')
 
 const routes = (server) => {
+    server.post('autehnticate', async (req, res, next) => {
+        try{
+            const { email, password } = request.params
+            res.send(await db.auth().authenticate(email, password))
+        }catch(error) {
+            res.send(error)
+        }
+        next()
+    })
+
     server.get('category', async (req, res, next) => {
         try{
             res.send(await db.categories().all())
