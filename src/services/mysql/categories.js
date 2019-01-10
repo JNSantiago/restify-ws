@@ -12,10 +12,41 @@ const categories = deps => {
                 })
             })
         },
-        save: () => {
-
+        save: (name) => {
+            return new Promise((resolve, reject) => {
+                const { connection, errorHandler } = deps
+                connection.query('INSERT INTO categories (name) VALUES (?)', [name], (error, results) => {
+                    if(error) {
+                        errorHandler(error, 'Falha ao cadastrar a categoria', reject)
+                        return false
+                    }
+                    resolve({ category: { name, id: results.insertId } })
+                })
+            })
         },
-        update: () => {},
-        del: () => {}
+        update: (id, name) => {
+            return new Promise((resolve, reject) => {
+                const { connection, errorHandler } = deps
+                connection.query('UPDATE categories SET name = ? WHERE id = ?', [name, id], (error, results) => {
+                    if(error) {
+                        errorHandler(error, 'Falha ao atualizar a categoria', reject)
+                        return false
+                    }
+                    resolve({ category: { name, id: results.insertId } })
+                })
+            })
+        },
+        del: (id) => {
+            return new Promise((resolve, reject) => {
+                const { connection, errorHandler } = deps
+                connection.query('DELETE FROM categories WHERE id = ?', [name, id], (error, results) => {
+                    if(error) {
+                        errorHandler(error, 'Falha ao remover a categoria', reject)
+                        return false
+                    }
+                    resolve({ message: 'Categoria removida com sucesso!' })
+                })
+            })
+        }
     }
 }
